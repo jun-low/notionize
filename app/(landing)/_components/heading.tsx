@@ -1,10 +1,15 @@
 "use client";
 
+import { useConvexAuth } from "convex/react";
 import { ArrowRight } from "lucide-react";
+import { SignInButton } from "@clerk/clerk-react";
+import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/spinner";
 
 export const Heading = () => {
+  const { isAuthenticated, isLoading } = useConvexAuth();
 
   return (
     <div className="max-w-3xl space-y-4">
@@ -15,10 +20,27 @@ export const Heading = () => {
         Notionize is the connected workspace where <br />
         better, faster work happens.
       </h3>
-        <Button>
-          Get Notionize free
-          <ArrowRight className="h-4 w-4 ml-2" />
+      {isLoading && (
+        <div className="w-full flex items-center justify-center">
+          <Spinner size="lg" />
+        </div>
+      )}
+      {isAuthenticated && !isLoading && (
+        <Button asChild>
+          <Link href="/documents">
+            Enter Notionize
+            <ArrowRight className="h-4 w-4 ml-2" />
+          </Link>
         </Button>
+      )}
+      {!isAuthenticated && !isLoading && (
+        <SignInButton mode="modal">
+          <Button>
+            Get Notionize free
+            <ArrowRight className="h-4 w-4 ml-2" />
+          </Button>
+        </SignInButton>
+      )}
     </div>
   )
 }
