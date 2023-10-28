@@ -13,9 +13,7 @@ interface BannerProps {
   documentId: Id<"documents">;
 };
 
-export const Banner = ({
-  documentId
-}: BannerProps) => {
+export const Banner = ({ documentId }: BannerProps) => {
   const router = useRouter();
 
   const remove = useMutation(api.documents.remove);
