@@ -37,6 +37,7 @@ A Notion clone project that replicates some of the key features and functionalit
 - **Cover Image for Each Document:** Add cover images to your documents for a personalized touch.
 
 ## Prerequisites
+
 Node version 18.x.x
 
 ## Getting Started
@@ -48,29 +49,32 @@ Node version 18.x.x
    ```
 
 2. Navigate to the project directory:
+
    ```bash
    cd notioize
    ```
 
 3. Install the project dependencies:
-    ```bash
-    npm install
-    ```
+
+   ```bash
+   npm install
+   ```
 
 4. Setup `.env` file from the `.env.example`.
 
 5. Run the development server:
-    ```bash
-    npm run dev
-    ```
+
+   ```bash
+   npm run dev
+   ```
 
 6. Setup Convex:
-    ```bash
-    npm run convex:dev
-    ```
+
+   ```bash
+   npm run convex:dev
+   ```
 
 7. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 

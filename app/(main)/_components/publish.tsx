@@ -77,7 +77,12 @@ export const Publish = ({ initialData }: PublishProps) => {
           )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-80 mt-1" align="end" alignOffset={8} forceMount>
+      <PopoverContent
+        className="w-80 mt-1"
+        align="end"
+        alignOffset={8}
+        forceMount
+      >
         {initialData.isPublished ? (
           <div className="space-y-4">
             <div className="flex items-center gap-x-2">
@@ -118,7 +123,8 @@ export const Publish = ({ initialData }: PublishProps) => {
             <Globe2 className="h-8 w-8 text-muted-foreground mb-4" />
             <p className="text-sm font-medium mb-2">Publish to web</p>
             <span className="text-xs text-center text-muted-foreground mb-6">
-            Publish a static website of this page. You can allow others to view, duplicate, and remix.
+              Publish a static website of this page. You can allow others to
+              view, duplicate, and remix.
             </span>
             <Button
               disabled={isSubmitting}

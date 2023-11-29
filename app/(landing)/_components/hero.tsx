@@ -20,19 +20,19 @@ export const Hero = () => {
         </div>
         <div className="relative h-[250px] w-[400px] hidden md:block">
           <Image
-              src="/person-files.svg"
-              fill
-              className="object-contain dark:hidden"
-              alt="A person going through files"
-            />
-            <Image
-              src="/person-files-dark.svg"
-              fill
-              className="object-contain hidden dark:block"
-              alt="A person going through files"
-            />
+            src="/person-files.svg"
+            fill
+            className="object-contain dark:hidden"
+            alt="A person going through files"
+          />
+          <Image
+            src="/person-files-dark.svg"
+            fill
+            className="object-contain hidden dark:block"
+            alt="A person going through files"
+          />
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
