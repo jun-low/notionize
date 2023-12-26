@@ -10,6 +10,9 @@ import { SingleImageDropzone } from "@/components/single-image-dropzone";
 import { useEdgeStore } from "@/lib/edgestore";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
+import { EdgeStoreApiClientError } from "@edgestore/react/shared";
+import { formatFileSize } from "@edgestore/react/utils";
+import { toast } from "sonner";
 
 export const CoverImageModal = () => {
   const params = useParams();
@@ -27,23 +30,47 @@ export const CoverImageModal = () => {
   };
 
   const onChange = async (file?: File) => {
-    if (file) {
-      setIsSubmitting(true);
-      setFile(file);
+    try {
+      if (file) {
+        setIsSubmitting(true);
+        setFile(file);
+        formatFileSize(10485760); // 10MB
 
-      const res = await edgestore.publicFiles.upload({
-        file,
-        options: {
-          replaceTargetUrl: coverImage.url,
-        },
-      });
+        const res = await edgestore.publicFiles.upload({
+          file,
+          options: {
+            replaceTargetUrl: coverImage.url,
+          },
+        });
 
-      await update({
-        id: params.documentId as Id<"documents">,
-        coverImage: res.url,
-      });
+        await update({
+          id: params.documentId as Id<"documents">,
+          coverImage: res.url,
+        });
 
-      onClose();
+        onClose();
+      }
+    } catch (error) {
+      if (error instanceof EdgeStoreApiClientError) {
+        // if it fails due to the `maxSize` set in the router config
+        if (error.data.code === 'FILE_TOO_LARGE') {
+          toast.error(`File too large. Max size is ${formatFileSize(
+            error.data.details.maxFileSize,
+          )}`);
+        }
+        // if it fails due to the `accept` set in the router config
+        if (error.data.code === 'MIME_TYPE_NOT_ALLOWED') {
+          toast.error(
+            `File type not allowed. Allowed types are ${error.data.details.allowedMimeTypes.join(
+              ', ',
+            )}`,
+          );
+        }
+        // if it fails during the `beforeUpload` check
+        if (error.data.code === 'UPLOAD_NOT_ALLOWED') {
+          toast.error("You don't have permission to upload files here.");
+        }
+      }
     }
   };
 
