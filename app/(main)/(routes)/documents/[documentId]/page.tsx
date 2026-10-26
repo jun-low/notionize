@@ -2,7 +2,7 @@
 
 import { useMutation, useQuery } from "convex/react";
 import dynamic from "next/dynamic";
-import { useMemo } from "react";
+import { use, useMemo } from "react";
 
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
@@ -11,26 +11,28 @@ import { Cover } from "@/components/cover";
 import { Skeleton } from "@/components/ui/skeleton";
 
 interface DocumentIdPageProps {
-  params: {
+  params: Promise<{
     documentId: Id<"documents">;
-  };
+  }>;
 }
 
 const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
+  const { documentId } = use(params);
+
   const Editor = useMemo(
     () => dynamic(() => import("@/components/editor"), { ssr: false }),
     [],
   );
 
   const document = useQuery(api.documents.getById, {
-    documentId: params.documentId,
+    documentId: documentId,
   });
 
   const update = useMutation(api.documents.update);
 
   const onChange = (content: string) => {
     update({
-      id: params.documentId,
+      id: documentId,
       content,
     });
   };
