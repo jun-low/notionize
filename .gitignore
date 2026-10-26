@@ -39,3 +39,8 @@ next-env.d.ts
 
 # vscode
 .vscode/*
+# env files (keep secrets out of git)
+.env
+.env.local
+.env.*.local
+!.env.example

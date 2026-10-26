@@ -10,7 +10,7 @@ import { SingleImageDropzone } from "@/components/single-image-dropzone";
 import { useEdgeStore } from "@/lib/edgestore";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
-import { EdgeStoreApiClientError } from "@edgestore/react/shared";
+import { EdgeStoreApiClientError } from "@edgestore/react/errors";
 import { formatFileSize } from "@edgestore/react/utils";
 import { toast } from "sonner";
 
